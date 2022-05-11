@@ -111,4 +111,9 @@ public class StudentServiceImpl implements StudentService {
 		LocalDate currentDate = LocalDate.now();
 		return Period.between(birthDate, currentDate).getYears();
 	}
+	
+	@Override
+	public void deleteStudentByFiscalCode(String fiscalCode, String urlCode) {
+		studentRepository.deleteJoin(fiscalCode, urlCode);
+	}
 }

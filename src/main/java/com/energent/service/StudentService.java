@@ -14,5 +14,6 @@ public interface StudentService {
 	void relateStudentAcademy(Academy academy, Student student) throws Exception;
 	void insertJoin(String academy_id, String student_id) ;
 	int ageCalculator(Student student);
+	void deleteStudentByFiscalCode(String fiscalCode, String urlCode);
 	
 }
