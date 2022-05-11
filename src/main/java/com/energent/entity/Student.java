@@ -1,5 +1,6 @@
 package com.energent.entity;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class Student {
 	private String firstName, lastName;
 	
 	@Column(nullable = false)
-	private int age;
+	private Date birthDate;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "academy_student", 
@@ -33,11 +34,11 @@ public class Student {
 	private List<Academy> academies = new ArrayList<>();
 
 	public Student() {}
-	public Student(String fiscalCode, String firstName, String lastName, int age) {
+	public Student(String fiscalCode, String firstName, String lastName, Date birthDate) {
 		this.fiscalCode = fiscalCode;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.age = age;
+		this.birthDate = birthDate;
 		
 	}
 	
@@ -56,9 +57,9 @@ public class Student {
 		this.lastName = lastName;
 		
 	}
-	public int getAge() {return age;}
-	public void setAge(int age) {
-		this.age = age;
+	public Date getBirthDate() {return birthDate;}
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
 		
 	}
 	public List<Academy> getAcademies() {return academies;}
