@@ -92,10 +92,19 @@ public class StudentController {
 		students.add(student);
 		academies.addAll(student.getAcademies());
 
+		student.getAcademies().clear();
+		for(Academy a : academies) {
+			a.getStudents().clear();
+		}
+		
 		studentService.addOrUpdateStudent(student);
+		student.getAcademies().addAll(academies);
 
-		for(Academy a : academies)
+		for(Academy a : academies) {
 			academyService.addOrUpdateAcademy(a);
+			a.getStudents().addAll(students);
+			
+		}
 
 		return "redirect:/academies";
 	}
