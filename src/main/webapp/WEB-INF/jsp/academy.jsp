@@ -22,10 +22,13 @@
 			<form:form modelAttribute="academy" method="post" action="${addURL}" cssClass="form">
 			 
 			 <c:if test="${academy.code==null}" >
+			 <div class="form row">
 				<div class="form-group">
 					<label>Code</label>
 					<form:input path="code" cssClass="form-control" id="code" required="required"/>
 				</div>
+			</div>
+			
 			 </c:if>
 			 <c:if test="${academy.code!=null}" >
 			 <form:hidden path="code" />
