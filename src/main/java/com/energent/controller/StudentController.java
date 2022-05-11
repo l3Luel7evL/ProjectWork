@@ -61,6 +61,7 @@ public class StudentController {
 	@GetMapping("/students/update/{fiscalCode}")
 	public ModelAndView showUpdatePage(@PathVariable String fiscalCode) {
 		return new ModelAndView("student", "student", studentService.findStudentById(fiscalCode));
+	
 	}
 	
 	@GetMapping("/students/remove/{fiscalCode}")
