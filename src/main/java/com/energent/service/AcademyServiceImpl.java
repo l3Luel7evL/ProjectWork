@@ -23,9 +23,13 @@ public class AcademyServiceImpl implements AcademyService{
 	public Academy findAcademyById(String id) {return academyRepository.findById(id).get();}
 
 	@Override
-	public void addOrUpdateAcademy(Academy academy){
+	public void addOrUpdateAcademy(Academy academy) throws Exception{
 		String id = academy.getCode();
 		Academy academyToUpdate = null;
+		
+		if(academy.getEndDate().toLocalDate().isBefore(academy.getStartDate().toLocalDate())) {
+			throw new Exception("Errore, la data di fine non puo' essere prima di quella di partenza!");
+		}
 		
 		if(!academyRepository.existsById(id))
 			academyRepository.save(academy);
