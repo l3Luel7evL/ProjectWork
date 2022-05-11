@@ -76,6 +76,7 @@ public class StudentController {
 		studentService.removeStudent(fiscalCode, urlCode);
 		
 		return "redirect:/academies";
+		
 	}
 	
 	@GetMapping("/students/all")
