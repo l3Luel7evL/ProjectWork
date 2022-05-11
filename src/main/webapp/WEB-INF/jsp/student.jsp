@@ -39,8 +39,8 @@
 					<form:input path="lastName" cssClass="form-control" id="lastName" required="required"/>
 				</div>
 				<div class="form-group">
-					<label>Age</label>
-					<form:input path="age" cssClass="form-control" id="age" required="required"/>
+					<label>Birth Date</label>
+					<form:input path="birthDate" type="date" cssClass="form-control" id="birthDate" required="required"/>
 				</div>
 				<button type="submit" class="btn btn-success">Add or Update Student</button>
 			</form:form>

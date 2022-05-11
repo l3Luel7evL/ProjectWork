@@ -1,5 +1,7 @@
 package com.energent.service;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,25 @@ public class StudentServiceImpl implements StudentService {
 	public Student findStudentById(String id) {return studentRepository.findById(id).get();}
 
 	@Override
-	public void addOrUpdateStudent(Student student) {
+	public void addOrUpdateStudent(Student student) throws Exception {
 		String id = student.getFiscalCode();
 		Student studentToUpdate = null;	
 		
+		if (!student.getFiscalCode().toUpperCase().matches("^[A-Z]{6}[0-9]{2}[A-Z][0-9]{2}[A-Z][0-9]{3}[A-Z]$")) {
+			throw new Exception("Verificare di aver digitato il codice fiscale correttamente");
+		}
+
+		if (!student.getFirstName().matches("[a-zA-Z]+")) {
+			throw new Exception("Per favore inserire un vero nome");
+		}
+
+		if (!student.getLastName().matches("[a-zA-Z]+")) {
+			throw new Exception("Per favore inserire un vero cognome");
+		}
+
+		if (ageCalculator(student) < 18) {
+			throw new Exception("Età inferiore ai 18 anni, impossibile completare la registrazione!");
+		}
 		if(!studentRepository.existsById(id))
 			studentRepository.save(student);
 		
@@ -33,11 +50,11 @@ public class StudentServiceImpl implements StudentService {
 			
 			studentToUpdate.setFirstName(student.getFirstName());
 			studentToUpdate.setLastName(student.getLastName());
-			studentToUpdate.setAge(student.getAge());
+			studentToUpdate.setBirthDate(student.getBirthDate());
 			studentToUpdate.getAcademies().addAll(student.getAcademies());
 			
 			studentRepository.save(studentToUpdate);
-		}
+			}
 	}
 
 	@Override
@@ -49,29 +66,17 @@ public class StudentServiceImpl implements StudentService {
 		List<Academy> academies = student.getAcademies();
 		
 		if(student.getAcademies()!= null && academy.getStudents()!= null) {
-			/*academies.remove(academy);
+			academies.remove(academy);
 			students.remove(student);
 			
-
 			academy.getStudents().clear();
-			student.getAcademies().clear();*/
-			//student.getAcademies().remove(academy);
-			//academy.getStudents().remove(student);
-//			academies.remove(student);
-//			students.remove(academy);
-//			
 			student.getAcademies().clear();
-			academy.getStudents().remove(student);
-//			student.setAcademies(academies);
-//			academy.setStudents(students);
 		}
-//		academy.getStudents().addAll(students);
-//		student.getAcademies().addAll(academies);
-		addOrUpdateStudent(student);
-		academyService.addOrUpdateAcademy(academy);
 		
 		studentRepository.deleteById(id);
 		
+		academy.getStudents().addAll(students);
+		student.getAcademies().addAll(academies);
 	}
 
 	@Override
@@ -83,18 +88,10 @@ public class StudentServiceImpl implements StudentService {
 	}
 	
 	@Override
-	public void relateStudentAcademy(Academy academy, Student student){
-		List<Academy> academies = student.getAcademies();
-		List<Student> students = academy.getStudents();
-		
-		student.getAcademies().clear();
-		academy.getStudents().clear();
-		
+	public void relateStudentAcademy(Academy academy, Student student) throws Exception{
 		academyService.addOrUpdateAcademy(academy);
 		addOrUpdateStudent(student);
 		
-		academy.getStudents().addAll(students);
-		student.getAcademies().addAll(academies);
 	}
 
 	@Override
@@ -106,5 +103,12 @@ public class StudentServiceImpl implements StudentService {
 			student.getAcademies().remove(academy);
 			
 		studentRepository.insertJoin(academy_id, student_id);
+	}
+	
+	@Override
+	public int ageCalculator(Student student) {
+		LocalDate birthDate = student.getBirthDate().toLocalDate();
+		LocalDate currentDate = LocalDate.now();
+		return Period.between(birthDate, currentDate).getYears();
 	}
 }

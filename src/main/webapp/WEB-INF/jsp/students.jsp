@@ -21,7 +21,7 @@
 						<th scope="col" >Fiscal Code</th>
 						<th scope="col">First Name</th>
 						<th scope="col">Last Name</th>
-						<th scope="col">Age</th>
+						<th scope="col">Birth Date</th>
 						<th colspan="2"  style="align-content: center;">Actions:</th>
 					</tr>
 				</thead>
@@ -31,7 +31,7 @@
 							<td>${student.fiscalCode}</td>
 							<td>${student.firstName}</td>
 							<td>${student.lastName}</td>
-							<td>${student.age}</td>
+							<td>${student.birthDate}</td>
 							<td align="center">
 								<spring:url value="/students/update/${student.fiscalCode}" var="editURL"/>
 								<a class="btn btn-info" href="${editURL}" role="button">

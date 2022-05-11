@@ -76,7 +76,7 @@ public class StudentController {
 	}
 	
 	@PostMapping("/relate/students")
-	public String relateStudent(@ModelAttribute("student") Student student){
+	public String relateStudent(@ModelAttribute("student") Student student) throws Exception{
 		List<Student> students = new ArrayList<>();
 		List<Academy> academies = new ArrayList<>();
 		
