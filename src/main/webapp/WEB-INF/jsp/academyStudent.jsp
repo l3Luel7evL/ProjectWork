@@ -33,8 +33,8 @@
 					<form:input path="lastName" cssClass="form-control" id="lastName" required="required"/>
 				</div>
 				<div class="form-group">
-					<label>Age</label>
-					<form:input path="age" cssClass="form-control" id="age" required="required"/>
+					<label>Birth Date</label>
+					<form:input path="birthDate" cssClass="form-control" id="birthDate" required="required"/>
 				</div>
 			 	
 			 	<div class="form-group">
