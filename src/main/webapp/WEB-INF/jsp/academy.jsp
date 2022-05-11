@@ -28,7 +28,6 @@
 					<form:input path="code" cssClass="form-control" id="code" required="required"/>
 				</div>
 			</div>
-			
 			 </c:if>
 			 <c:if test="${academy.code!=null}" >
 			 <form:hidden path="code" />
