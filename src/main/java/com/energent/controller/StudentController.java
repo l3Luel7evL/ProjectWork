@@ -63,16 +63,23 @@ public class StudentController {
 		return new ModelAndView("student", "student", studentService.findStudentById(fiscalCode));
 	}
 	
+	@GetMapping("/students/remove/{fiscalCode}/all")
+	public String removeStudentAll(@PathVariable String fiscalCode) {
+		studentService.removeStudent(fiscalCode, urlCode);
+		
+		return "redirect:/academies";
+	}
+	
 	@GetMapping("/students/remove/{fiscalCode}")
 	public String removeStudent(@PathVariable String fiscalCode) {
-		studentService.removeStudent(fiscalCode, urlCode);
+		studentService.deleteStudentByFiscalCode(fiscalCode, urlCode);
 		
 		return "redirect:/academies";
 	}
 	
 	@GetMapping("/students/all")
 	public ModelAndView showAllStudents() {
-		return new ModelAndView("students", "students", studentService.findAllStudents());
+		return new ModelAndView("studentsAll", "students", studentService.findAllStudents());
 	}
 	
 	@PostMapping("/relate/students")

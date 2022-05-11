@@ -114,6 +114,12 @@ public class StudentServiceImpl implements StudentService {
 	
 	@Override
 	public void deleteStudentByFiscalCode(String fiscalCode, String urlCode) {
+		Student student = findStudentById(fiscalCode);
+		Academy academy = academyService.findAcademyById(urlCode);
+		
+		academy.getStudents().remove(student);
+		student.getAcademies().remove(academy);
+		
 		studentRepository.deleteJoin(fiscalCode, urlCode);
 	}
 }

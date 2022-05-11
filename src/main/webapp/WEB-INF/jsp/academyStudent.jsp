@@ -34,7 +34,7 @@
 				</div>
 				<div class="form-group">
 					<label>Birth Date</label>
-					<form:input path="birthDate" cssClass="form-control" id="birthDate" required="required"/>
+					<form:input path="birthDate" type="date" cssClass="form-control" id="birthDate" required="required"/>
 				</div>
 			 	
 			 	<div class="form-group">

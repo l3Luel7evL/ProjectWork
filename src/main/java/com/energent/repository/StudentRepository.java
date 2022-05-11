@@ -21,6 +21,6 @@ public interface StudentRepository extends JpaRepository<Student, String>{
 	
 	@Modifying
 	@Transactional
-	@Query(value = "delete from academy_student where student_id = ?1 and academy_id = ?2", nativeQuery = true)
+	@Query(value = "delete from academy_student where student_fiscal_code = ?1 and academy_code = ?2", nativeQuery = true)
 	void deleteJoin(String academy_id, String student_id);
 }
