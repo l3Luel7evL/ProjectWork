@@ -49,17 +49,29 @@ public class StudentServiceImpl implements StudentService {
 		List<Academy> academies = student.getAcademies();
 		
 		if(student.getAcademies()!= null && academy.getStudents()!= null) {
-			academies.remove(academy);
+			/*academies.remove(academy);
 			students.remove(student);
 			
+
 			academy.getStudents().clear();
+			student.getAcademies().clear();*/
+			//student.getAcademies().remove(academy);
+			//academy.getStudents().remove(student);
+//			academies.remove(student);
+//			students.remove(academy);
+//			
 			student.getAcademies().clear();
+			academy.getStudents().remove(student);
+//			student.setAcademies(academies);
+//			academy.setStudents(students);
 		}
+//		academy.getStudents().addAll(students);
+//		student.getAcademies().addAll(academies);
+		addOrUpdateStudent(student);
+		academyService.addOrUpdateAcademy(academy);
 		
 		studentRepository.deleteById(id);
 		
-		academy.getStudents().addAll(students);
-		student.getAcademies().addAll(academies);
 	}
 
 	@Override
@@ -72,9 +84,17 @@ public class StudentServiceImpl implements StudentService {
 	
 	@Override
 	public void relateStudentAcademy(Academy academy, Student student){
+		List<Academy> academies = student.getAcademies();
+		List<Student> students = academy.getStudents();
+		
+		student.getAcademies().clear();
+		academy.getStudents().clear();
+		
 		academyService.addOrUpdateAcademy(academy);
 		addOrUpdateStudent(student);
 		
+		academy.getStudents().addAll(students);
+		student.getAcademies().addAll(academies);
 	}
 
 	@Override
