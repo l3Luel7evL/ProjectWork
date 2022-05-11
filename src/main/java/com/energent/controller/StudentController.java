@@ -37,7 +37,7 @@ public class StudentController {
 		urlCode= code;
 		academies.add(academyService.findAcademyById(code));
 		
-		mav.addObject("urlCode", urlCode);
+		//mav.addObject("urlCode", urlCode);
 		mav.addObject("students", studentService.findStudentsByAcademies(academies));
 		
 		return mav;
@@ -59,10 +59,7 @@ public class StudentController {
 	}
 	
 	@GetMapping("/students/update/{fiscalCode}")
-	public ModelAndView showUpdatePage(@PathVariable String fiscalCode) {
-		return new ModelAndView("student", "student", studentService.findStudentById(fiscalCode));
-	
-	}
+	public ModelAndView showUpdatePage(@PathVariable String fiscalCode) {return new ModelAndView("student", "student", studentService.findStudentById(fiscalCode));}
 	
 	@GetMapping("/students/remove/{fiscalCode}")
 	public String removeStudent(@PathVariable String fiscalCode) {
@@ -76,13 +73,10 @@ public class StudentController {
 		studentService.removeStudent(fiscalCode, urlCode);
 		
 		return "redirect:/academies";
-		
 	}
 	
 	@GetMapping("/students/all")
-	public ModelAndView showAllStudents() {
-		return new ModelAndView("studentsAll", "students", studentService.findAllStudents());
-	}
+	public ModelAndView showAllStudents() {return new ModelAndView("studentsAll", "students", studentService.findAllStudents());}
 	
 	@PostMapping("/relate/students")
 	public String relateStudent(@ModelAttribute("student") Student student) throws Exception{
@@ -93,9 +87,8 @@ public class StudentController {
 		academies.addAll(student.getAcademies());
 
 		student.getAcademies().clear();
-		for(Academy a : academies) {
+		for(Academy a : academies)
 			a.getStudents().clear();
-		}
 		
 		studentService.addOrUpdateStudent(student);
 		student.getAcademies().addAll(academies);
@@ -105,7 +98,7 @@ public class StudentController {
 			a.getStudents().addAll(students);
 			
 		}
-
+		
 		return "redirect:/academies";
 	}
 	
