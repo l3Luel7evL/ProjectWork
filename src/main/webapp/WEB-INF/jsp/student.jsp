@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html class="h-100">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Add Or Update Student</title>
@@ -12,9 +12,11 @@
 		<script src="../../webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 		<script src="../../webjars/jquery/3.0.0/js/jquery.min.js"></script>
 	</head>
-	<body>	
+	<body class="h-100">	
+	<div class="container h-100" >
+		<div class="row h-100 justify-content-center align-items-center"> 
+		<div class="col-10 col-md-8 col-lg-6">
 		<jsp:include page="header.jsp" />
-		
 		<div class="container">
 			<spring:url value="/students" var="addURL"/>
 			<h2>Add Student</h2>
