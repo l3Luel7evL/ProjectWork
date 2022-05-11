@@ -24,6 +24,7 @@ public class AcademyServiceImpl implements AcademyService{
 
 	@Override
 	public void addOrUpdateAcademy(Academy academy) throws Exception{
+		
 		String id = academy.getCode();
 		Academy academyToUpdate = null;
 		
