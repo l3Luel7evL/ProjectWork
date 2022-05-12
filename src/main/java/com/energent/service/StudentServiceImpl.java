@@ -101,7 +101,7 @@ public class StudentServiceImpl implements StudentService {
 		
 		if(student.getAcademies().contains(academy))
 			student.getAcademies().remove(academy);
-			
+
 		studentRepository.insertJoin(academy_id, student_id);
 	}
 	

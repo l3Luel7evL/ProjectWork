@@ -1,6 +1,7 @@
 package com.energent.controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,24 +81,86 @@ public class StudentController {
 	
 	@PostMapping("/relate/students")
 	public String relateStudent(@ModelAttribute("student") Student student) throws Exception{
-		List<Student> students = new ArrayList<>();
-		List<Academy> academies = new ArrayList<>();
+		List<Academy> academies = student.getAcademies();
 		
-		students.add(student);
-		academies.addAll(student.getAcademies());
-
-		student.getAcademies().clear();
-		for(Academy a : academies)
-			a.getStudents().clear();
+//		student.getAcademies().clear();
+		//student.getAcademies().addAll(academies);
 		
-		studentService.addOrUpdateStudent(student);
-		student.getAcademies().addAll(academies);
-
-		for(Academy a : academies) {
+		for (Academy a : student.getAcademies()) {
+//			a.getStudents().remove(student);
+//			student.getAcademies().remove(a);
+			a.getStudents().add(student);
 			academyService.addOrUpdateAcademy(a);
-			a.getStudents().addAll(students);
+			
 			
 		}
+//		student.getAcademies().addAll(academies);
+		studentService.addOrUpdateStudent(student);
+		
+			
+		//student.getAcademies().addAll(academies);
+		for(Academy a : academyService.findAllAcademies())
+			if(!student.getAcademies().contains(a))
+				studentService.deleteStudentByFiscalCode(student.getFiscalCode(), a.getCode());
+		
+		student.getAcademies().clear();
+		for(Academy a : academies)
+			studentService.insertJoin(a.getCode(), student.getFiscalCode());
+		/*List<Academy> academies = student.getAcademies();
+		
+		student.getAcademies().clear();
+		
+		for(Academy a : academyService.findAllAcademies())
+			if(!academies.contains(a))
+				studentService.deleteStudentByFiscalCode(student.getFiscalCode(), a.getCode());
+		
+		student.getAcademies().addAll(academies);
+		studentService.addOrUpdateStudent(student);
+		
+		for(Academy a : student.getAcademies()) 
+			academyService.addOrUpdateAcademy(a);
+			
+		for(Academy a : academyService.findAllAcademies())
+			if(academies.contains(a))
+				studentService.insertJoin(a.getCode(), student.getFiscalCode());*/
+		
+//		student.getAcademies().clear();
+//		studentService.addOrUpdateStudent(student);
+//		
+////		for(Academy a : academies) {
+////			a.getStudents().remove(student);
+////			academyService.addOrUpdateAcademy(a);
+////		}
+//		
+//		for(Academy a : academyService.findAllAcademies()) {
+//			if(!academies.contains(a)) {
+//				studentService.deleteStudentByFiscalCode(student.getFiscalCode(), a.getCode());
+//				academyService.addOrUpdateAcademy(a);
+//			}
+//		}
+//		student.getAcademies().addAll(academies);
+//		studentService.addOrUpdateStudent(student);
+//		
+//		for(Academy a : academies) {
+//			studentService.insertJoin(a.getCode(), student.getFiscalCode());
+//			academyService.addOrUpdateAcademy(a);
+//			
+//		}
+		
+		
+////		
+////		for(Academy a : academies) {
+////			a.getStudents().add(student);
+////			academyService.addOrUpdateAcademy(a);
+////			
+////		}
+		
+//		
+		
+//		}
+		
+		//for(Academy a : academies)
+		
 		
 		return "redirect:/academies";
 	}
@@ -112,3 +175,41 @@ public class StudentController {
 		return mav;
 	}
 }
+
+/*	//List<Student> students = new ArrayList<>();
+List<Academy> academies = new ArrayList<>();
+
+//students.add(student);
+academies.addAll(student.getAcademies());
+
+/*
+student.getAcademies().clear();
+for(Academy a : academies) {
+	studentService.deleteStudentByFiscalCode(a.getCode(), student.getFiscalCode());
+	a.getStudents().clear();
+}
+
+
+student.getAcademies().addAll(academies);
+
+for(Academy a : academies) {
+	a.getStudents().addAll(students);
+	academyService.addOrUpdateAcademy(a);
+	
+}
+studentService.addOrUpdateStudent(student);
+//student.getAcademies().clear();
+for(Academy a : academies) {
+	a.getStudents().clear();
+	studentService.deleteStudentByFiscalCode(a.getCode(), student.getFiscalCode());
+}
+
+//student.getAcademies().clear();
+student.getAcademies().addAll(academies);
+for(Academy a : academies) {
+	//studentService.deleteStudentByFiscalCode(a.getCode(), student.getFiscalCode());
+	a.getStudents().add(student);
+	academyService.addOrUpdateAcademy(a);
+	
+}
+studentService.addOrUpdateStudent(student);*/
