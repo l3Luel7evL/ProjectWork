@@ -5,10 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.energent.entity.Academy;
-import com.energent.entity.Student;
-import com.energent.repository.AcademyRepository;
-import com.energent.repository.StudentRepository;
+import com.energent.entity.*;
+import com.energent.repository.*;
 
 @Service
 public class AcademyServiceImpl implements AcademyService{

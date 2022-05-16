@@ -70,7 +70,5 @@ public class Academy {
 	public String toString() {
 		return "Academy [code=" + code + ", title=" + title + ", location=" + location + ", startDate=" + startDate
 				+ ", endDate=" + endDate + ", students=" + students + "]";
-	}
-	
-	
+	}	
 }
