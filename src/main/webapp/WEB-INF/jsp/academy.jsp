@@ -8,9 +8,52 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Add Or Update Academy</title>
+		
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+	
+		<!-- <link href="/css/style.css" rel="stylesheet"/> -->
 		<link href="../../webjars/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" />
 		<script src="../../webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 		<script src="../../webjars/jquery/3.0.0/js/jquery.min.js"></script>
+		<!-- <script src="/WEB-INF/js/myscript.js"></script> -->
+		<style type="text/css">
+			input:valid {
+				border-color: green;
+			}
+			
+			input:invalid {
+				border-color: red;
+			}
+		</style>
+		<script type="text/javascript">
+		function test(){
+			let x = document.forms["myForm"]["code"].value;
+			x.isValid = function(){
+				return /[a-zA-z ]+/.test(x);
+			}
+			
+			document.getElementById('codeV').innerHTML = x.isValid();
+		}
+		
+		function myFunc(){
+			var start = document.getElementById('startDate').value;
+			var end = document.getElementById('endDate').value;
+			
+			var strt = Date.parse(start);
+			var nd = Date.parse(end);
+			
+			var yearStrt  = strt.getFullYear();
+			var ndYear  = nd.getFullYear();
+			
+			if(yearStrt< ndYear){
+				alert("Check dates!");
+				return false;
+			}
+		}
+		</script>
 	</head>
 	<body class="h-100">	
 		<jsp:include page="header.jsp" />
@@ -21,11 +64,13 @@
 					<spring:url value="/academies" var="addURL"/>
 					<h2>Add Academy</h2>
 		
-					<form:form modelAttribute="academy" method="post" action="${addURL}" cssClass="form" >
+					<form:form modelAttribute="academy" method="post" action="${addURL}" cssClass="form" name="myForm" class="was-validated">
 						 <c:if test="${academy.code==null}" >
-							<div class="form-group">
+							<div class="form-group" id="codeV">
 								<label>Code</label>
-								<form:input path="code" cssClass="form-control" id="code" required="required"/>
+								<form:input path="code" pattern="[a-zA-Z ]+" cssClass="form-control" id="code" required="required"/>
+								<div class="valid-feedback">Valid.</div>
+      							<div class="invalid-feedback">Please fill out this field.</div>
 							</div>
 						 </c:if>
 						 
@@ -51,6 +96,7 @@
 						<div class="form-group">
 							<label>End Date</label>
 							<form:input path="endDate" type="date" cssClass="form-control" id="endDate" required="required"/>
+							<div class="valid-feedback" id="valid">Valid.</div>
 						</div>
 						
 						<button type="submit" class="btn btn-success">
